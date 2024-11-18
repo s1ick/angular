@@ -1,6 +1,7 @@
-<div class="max-w-2xl  container mx-auto pt-5">
-  <h1 class="font-bold mb-10 mt-10 text-lg text-center">{{ title | titlecase}}</h1>
-  <!-- <app-product [product]="products[0]"></app-product>
-  <app-product [product]="products[1]"></app-product> -->
-  <app-product *ngFor="let product of products" [product]="product"></app-product>
+
+<pre>
+        {{profiles | json}}
+</pre>
+<div class="profile-card__wrapper">
+        <app-profile-card *ngFor="let profile of profiles" [profile]="profile"></app-profile-card>
 </div>

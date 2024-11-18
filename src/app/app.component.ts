@@ -1,33 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { ProfileService } from './data/servicies/profile.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ProductComponent } from './components/product/product.component';
-import { IProduct } from './models/product';
-import { ProductService } from './services/product.service';
 import { HttpClient } from '@angular/common/http';
-import { provideHttpClient } from '@angular/common/http';
+import { ProfileCardComponent } from "./common-ui/profile-card/profile-card.component";
+import { Profile } from './data/interfaces/profile.interface';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [
     HttpClient
   ],
-  imports: [RouterOutlet, CommonModule, ProductComponent],
+  imports: [RouterOutlet, ProfileCardComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   
 })
-export class AppComponent implements OnInit {
-
-  title = 'Angular App';
-  products: IProduct[] = []
-
-  constructor(private ProductService: ProductService) {
-    
-    this.ProductService.getAll().subscribe(
-      (products:IProduct[]) => { this.products = products })
-  }
-  ngOnInit(): void {
-      
+export class AppComponent  {
+  ProfileService = inject(ProfileService)
+  profiles: Profile[] = [];
+  constructor() {
+    this.ProfileService.getTestAccounts()
+    .subscribe( val => {
+      this.profiles = [val]
+    })
   }
 }
